@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '../ui/Button';
@@ -57,12 +58,19 @@ export function HeroSection() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="flex flex-col sm:flex-row gap-4 mt-4 justify-center lg:justify-start"
             >
-              <Button size="lg" className="rounded-full group text-base h-14 px-8">
-                Belanja Sekarang
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              {/* CTA: Navigate to /products */}
+              <Button asChild size="lg" className="rounded-full group text-base h-14 px-8">
+                <Link href="/products">
+                  Belanja Sekarang
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Link>
               </Button>
-              <Button variant="glass" size="lg" className="rounded-full text-base h-14 px-8">
-                Jelajahi Komunitas
+
+              {/* CTA: Navigate to /community */}
+              <Button asChild variant="glass" size="lg" className="rounded-full text-base h-14 px-8">
+                <Link href="/community">
+                  Jelajahi Komunitas
+                </Link>
               </Button>
             </motion.div>
           </div>

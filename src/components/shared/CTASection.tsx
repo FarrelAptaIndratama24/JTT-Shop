@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '../ui/Button';
@@ -41,12 +42,19 @@ export function CTASection() {
             transition={{ delay: 0.2 }}
             className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
           >
-            <Button size="lg" className="w-full sm:w-auto rounded-full group">
-              Belanja Sekarang
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            {/* CTA: Navigate to /products */}
+            <Button asChild size="lg" className="w-full sm:w-auto rounded-full group">
+              <Link href="/products">
+                Belanja Sekarang
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full bg-white/5 border-white/10 hover:bg-white/10 text-white">
-              Gabung Komunitas
+
+            {/* CTA: Navigate to /community */}
+            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto rounded-full bg-white/5 border-white/10 hover:bg-white/10 text-white">
+              <Link href="/community">
+                Gabung Komunitas
+              </Link>
             </Button>
           </motion.div>
         </div>
