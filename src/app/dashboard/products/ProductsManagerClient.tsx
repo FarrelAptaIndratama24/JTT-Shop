@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useTransition, useRef, useEffect } from 'react';
-import { Product } from '@/types';
+import { Product, ProductCategory } from '@/types';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
@@ -217,6 +217,10 @@ export function ProductsManagerClient({ initialProducts, categories, isAdmin, cu
         // ─── Optimistic local state update for instant UI feedback ──────
         if (modalMode === 'edit' && selectedProduct) {
           const featuresList = features.split(',').map(f => f.trim()).filter(f => f !== '');
+          const validCategories: ProductCategory[] = ['Carbon', 'Wood', 'Break', 'Jump', 'Shaft', 'Accessories'];
+          const safeCategory: ProductCategory = validCategories.includes(categoryName as ProductCategory)
+            ? (categoryName as ProductCategory)
+            : selectedProduct.category;
           setProducts(prev => prev.map(p =>
             p.id === selectedProduct.id
               ? {
@@ -226,7 +230,7 @@ export function ProductsManagerClient({ initialProducts, categories, isAdmin, cu
                   stock: Number(stock),
                   image: imageUrl,
                   description,
-                  category: categoryName,
+                  category: safeCategory,
                   specs: { weight, length, tip, joint, shaft },
                   features: featuresList,
                 }
