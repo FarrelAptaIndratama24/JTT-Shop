@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useTransition, useRef } from 'react';
+import React, { useState, useTransition, useRef, useEffect } from 'react';
 import { Product } from '@/types';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -44,6 +44,14 @@ export function ProductsManagerClient({ initialProducts, categories, isAdmin, cu
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [searchQuery, setSearchQuery] = useState('');
   const [isPending, startTransition] = useTransition();
+
+  // ─── KEY FIX: Sync server data into client state ───────────────────────────
+  // useState only uses initialProducts on first mount. When router.refresh()
+  // triggers a server re-render with fresh data, this effect picks up the
+  // new initialProducts and updates local state so the UI reflects changes.
+  useEffect(() => {
+    setProducts(initialProducts);
+  }, [initialProducts]);
 
   // Modal states
   const [modalOpen, setModalOpen] = useState(false);
@@ -205,6 +213,28 @@ export function ProductsManagerClient({ initialProducts, categories, isAdmin, cu
       if (result.success) {
         toast.success(modalMode === 'create' ? 'Product created!' : 'Product updated!');
         setModalOpen(false);
+
+        // ─── Optimistic local state update for instant UI feedback ──────
+        if (modalMode === 'edit' && selectedProduct) {
+          const featuresList = features.split(',').map(f => f.trim()).filter(f => f !== '');
+          setProducts(prev => prev.map(p =>
+            p.id === selectedProduct.id
+              ? {
+                  ...p,
+                  name,
+                  price: Number(price),
+                  stock: Number(stock),
+                  image: imageUrl,
+                  description,
+                  category: categoryName,
+                  specs: { weight, length, tip, joint, shaft },
+                  features: featuresList,
+                }
+              : p
+          ));
+        }
+
+        // Also trigger server re-fetch so state is fully in sync
         router.refresh();
       } else {
         toast.error(result.error || 'Failed to save product.');

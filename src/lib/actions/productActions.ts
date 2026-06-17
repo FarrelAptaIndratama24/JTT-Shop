@@ -250,6 +250,7 @@ export async function updateProductAction(id: string, formData: FormData): Promi
       }
     }
 
+    revalidatePath('/');
     revalidatePath('/products');
     revalidatePath(`/products/${slug}`);
     revalidatePath('/dashboard/products');
