@@ -205,7 +205,7 @@ export function ProductsManagerClient({ initialProducts, categories, isAdmin, cu
       if (result.success) {
         toast.success(modalMode === 'create' ? 'Product created!' : 'Product updated!');
         setModalOpen(false);
-        window.location.reload();
+        router.refresh();
       } else {
         toast.error(result.error || 'Failed to save product.');
       }

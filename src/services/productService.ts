@@ -2,6 +2,8 @@ import { createClient } from '@/lib/supabase/server';
 import { DbProduct } from '@/types/database';
 import { Product } from '@/types';
 
+import { unstable_noStore as noStore } from 'next/cache';
+
 // ─── Mapper ───────────────────────────────────────────────────────────────────
 export function mapDbProductToProduct(p: DbProduct): Product {
   return {
@@ -32,6 +34,7 @@ const PRODUCT_SELECT = `
 `;
 
 export async function getProducts(): Promise<Product[]> {
+  noStore();
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('products')
@@ -42,6 +45,7 @@ export async function getProducts(): Promise<Product[]> {
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
+  noStore();
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('products')
@@ -53,6 +57,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
+  noStore();
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('products')
@@ -65,6 +70,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 }
 
 export async function getProductById(id: string): Promise<Product | null> {
+  noStore();
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('products')
@@ -81,6 +87,7 @@ export async function getProductById(id: string): Promise<Product | null> {
  * Used in the dashboard "My Products" page.
  */
 export async function getMyProducts(): Promise<Product[]> {
+  noStore();
   const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser();
   if (authError || !user) return [];
