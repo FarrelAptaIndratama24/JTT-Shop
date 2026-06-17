@@ -145,9 +145,15 @@ export function NavbarClient({ profile }: NavbarClientProps) {
                         <div className="px-4 py-3 border-b border-border bg-muted/30">
                           <p className="text-xs text-muted-foreground">Masuk sebagai</p>
                           <p className="text-sm font-semibold truncate">{profile.full_name}</p>
-                          <span className="inline-block mt-1 text-[10px] uppercase tracking-widest font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                              {profile.role ?? 'user'}
-                          </span>
+                          {profile.role === 'admin' ? (
+                            <span className="inline-block mt-1 text-[10px] uppercase tracking-widest font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                              ADMIN
+                            </span>
+                          ) : (
+                            <span className="inline-block mt-1 text-[10px] uppercase tracking-widest font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                              MEMBER
+                            </span>
+                          )}
                         </div>
 
                         <div className="p-1.5">

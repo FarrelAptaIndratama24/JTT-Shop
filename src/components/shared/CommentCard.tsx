@@ -64,9 +64,12 @@ export function CommentCard({ comment, className, isReply = false, depth = 0, in
             <span className={cn('font-semibold', isReply ? 'text-xs' : 'text-sm')}>{comment.user.name}</span>
             <Badge
               variant="outline"
-              className="text-[9px] py-0 px-1 h-3.5 uppercase tracking-tighter opacity-60 hidden sm:inline-flex"
+              className={cn(
+                "text-[9px] py-0 px-1 h-3.5 uppercase tracking-tighter hidden sm:inline-flex",
+                comment.user.role === 'admin' ? "border-amber-500/50 text-amber-500" : "opacity-60"
+              )}
             >
-              {comment.user.role}
+              {comment.user.role === 'admin' ? 'ADMIN' : 'MEMBER'}
             </Badge>
             <span className="text-[10px] text-muted-foreground ml-auto shrink-0">
               {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: id })}

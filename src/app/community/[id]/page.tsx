@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/Button';
 import { CommentSection } from '@/components/community/CommentSection';
 import { LikeButton } from '@/components/community/LikeButton';
 import { text } from '@/lib/dictionary';
+import { cn } from '@/lib/utils';
 
 interface PostDetailPageProps {
   params: Promise<{ id: string }>;
@@ -71,8 +72,14 @@ export default async function PostDetailPage({ params }: PostDetailPageProps) {
                 <div>
                   <div className="flex items-center gap-2">
                     <h4 className="font-bold text-base">{post.user.name}</h4>
-                    <Badge variant="outline" className="text-[10px] uppercase border-primary/40 text-primary">
-                      {post.user.role}
+                    <Badge 
+                      variant="outline" 
+                      className={cn(
+                        "text-[10px] uppercase",
+                        post.user.role === 'admin' ? "border-amber-500/50 text-amber-500 bg-amber-500/10" : "border-primary/40 text-primary bg-primary/10"
+                      )}
+                    >
+                      {post.user.role === 'admin' ? 'ADMIN' : 'MEMBER'}
                     </Badge>
                   </div>
                   <span className="text-xs text-muted-foreground">

@@ -119,9 +119,15 @@ export function MobileNavbar({ isOpen, onClose, profile }: MobileNavbarProps) {
                       <p className="text-sm font-semibold truncate leading-none mb-1">
                         {profile.full_name ?? 'Billiard Player'}
                       </p>
-                      <span className="text-[9px] uppercase tracking-wider font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                        {profile.role ?? 'user'}
-                      </span>
+                      {profile.role === 'admin' ? (
+                        <span className="text-[9px] uppercase tracking-wider font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                          ADMIN
+                        </span>
+                      ) : (
+                        <span className="text-[9px] uppercase tracking-wider font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                          MEMBER
+                        </span>
+                      )}
                     </div>
                   </div>
 

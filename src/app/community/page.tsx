@@ -13,6 +13,7 @@ import { createClient } from '@/lib/supabase/server';
 import { CreatePostModal } from '@/components/community/CreatePostModal';
 import Link from 'next/link';
 import { text } from '@/lib/dictionary';
+import { cn } from '@/lib/utils';
 
 /**
  * Server Component — fetches community posts, contributors, and current user like map.
@@ -113,7 +114,12 @@ export default async function CommunityPage() {
                       </div>
                       <div className="flex flex-col min-w-0">
                         <span className="text-sm font-medium truncate">{user.name}</span>
-                        <span className="text-[10px] text-muted-foreground uppercase">{user.role}</span>
+                        <span className={cn(
+                          "text-[10px] uppercase font-bold",
+                          user.role === 'admin' ? "text-amber-500" : "text-muted-foreground"
+                        )}>
+                          {user.role === 'admin' ? 'ADMIN' : 'MEMBER'}
+                        </span>
                       </div>
                     </div>
                   ))
