@@ -409,7 +409,7 @@ export function ProductsManagerClient({ initialProducts, categories, isAdmin, cu
         description="Fill in product details, specifications, features, and imagery."
         className="max-w-3xl"
       >
-        <form onSubmit={handleSubmit} className="space-y-5 pt-4 max-h-[75vh] overflow-y-auto pr-2 scrollbar-hide">
+        <form id="product-form" onSubmit={handleSubmit} className="space-y-5 pt-4">
           {/* Main info row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1">
@@ -593,32 +593,34 @@ export function ProductsManagerClient({ initialProducts, categories, isAdmin, cu
             />
           </div>
 
-          {/* Buttons */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-border mt-6">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setModalOpen(false)}
-              disabled={isPending}
-              className="rounded-full"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              disabled={isPending || isUploading}
-              className="rounded-full px-8"
-            >
-              {isPending ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...
-                </>
-              ) : (
-                'Save Product'
-              )}
-            </Button>
-          </div>
         </form>
+
+        {/* Sticky footer buttons — always visible at bottom of modal */}
+        <div className="flex justify-end gap-3 pt-4 border-t border-border mt-6 sticky bottom-0 bg-card pb-1">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setModalOpen(false)}
+            disabled={isPending}
+            className="rounded-full"
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            form="product-form"
+            disabled={isPending || isUploading}
+            className="rounded-full px-8"
+          >
+            {isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...
+              </>
+            ) : (
+              'Save Product'
+            )}
+          </Button>
+        </div>
       </Modal>
 
       {/* WhatsApp Requirement Modal */}

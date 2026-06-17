@@ -67,11 +67,12 @@ export function Modal({
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
               className={cn(
-                'pointer-events-auto flex w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl',
+                'pointer-events-auto flex w-full max-w-lg max-h-[85vh] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl',
                 className
               )}
             >
-              <div className="flex flex-col space-y-1.5 p-6 pb-4">
+              {/* Header — fixed at top */}
+              <div className="flex flex-col space-y-1.5 p-6 pb-4 shrink-0">
                 <div className="flex items-center justify-between">
                   {title && (
                     <h2 className="text-xl font-semibold leading-none tracking-tight">
@@ -93,12 +94,14 @@ export function Modal({
                 )}
               </div>
               
-              <div className="p-6 pt-0 overflow-y-auto max-h-[70vh]">
+              {/* Scrollable content area — the ONLY scrollable region */}
+              <div className="flex-1 min-h-0 overflow-y-auto px-6 pb-6">
                 {children}
               </div>
 
+              {/* Footer — fixed at bottom */}
               {footer && (
-                <div className="flex items-center p-6 pt-0 mt-auto bg-muted/30">
+                <div className="flex items-center p-6 pt-4 mt-auto shrink-0 border-t border-border bg-card">
                   {footer}
                 </div>
               )}
