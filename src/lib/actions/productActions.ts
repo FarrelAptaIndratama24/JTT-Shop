@@ -206,7 +206,7 @@ export async function updateProductAction(id: string, formData: FormData): Promi
       })
       .eq('id', id)
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
 

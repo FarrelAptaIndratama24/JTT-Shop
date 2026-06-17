@@ -58,7 +58,8 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     .from('products')
     .select(PRODUCT_SELECT)
     .eq('slug', slug)
-    .single();
+    .limit(1)
+    .maybeSingle();
   if (error) { console.error('[productService.getProductBySlug]', error.message); return null; }
   return mapDbProductToProduct(data as unknown as DbProduct);
 }
@@ -69,7 +70,8 @@ export async function getProductById(id: string): Promise<Product | null> {
     .from('products')
     .select(PRODUCT_SELECT)
     .eq('id', id)
-    .single();
+    .limit(1)
+    .maybeSingle();
   if (error) { console.error('[productService.getProductById]', error.message); return null; }
   return mapDbProductToProduct(data as unknown as DbProduct);
 }
