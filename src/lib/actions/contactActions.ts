@@ -5,7 +5,7 @@ import { contactMessageSchema } from '../validation';
 
 export type ContactActionResponse = {
   success: boolean;
-  error?: string;
+  error?: any;
 };
 
 export async function submitContactMessage(
@@ -27,7 +27,7 @@ export async function submitContactMessage(
   });
 
   if (!validationResult.success) {
-    return { success: false, error: validationResult.error.issues[0].message };
+    return { success: false, error: { message: validationResult.error.issues[0].message } };
   }
 
   const parsedData = validationResult.data;
@@ -35,24 +35,29 @@ export async function submitContactMessage(
   try {
     const supabase = await createClient();
 
-    const { error } = await supabase.from('contact_messages').insert({
+    const payload = {
       first_name: parsedData.first_name,
       last_name: parsedData.last_name,
       email: parsedData.email,
       subject: parsedData.subject,
       message: parsedData.message,
       status: 'unread',
-    });
+    };
+    console.log("Payload:", payload);
+
+    const { data, error } = await supabase.from('contact_messages').insert(payload).select();
+    console.log("Data:", data);
+    console.log("Error:", error);
 
     if (error) {
       console.error('[contact.submit] insert error:', error.message);
-      return { success: false, error: 'Failed to send message. Please try again.' };
+      return { success: false, error: error };
     }
 
     return { success: true };
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred.';
     console.error('[contact.submit] unexpected error:', errorMessage);
-    return { success: false, error: 'Failed to send message. Please try again.' };
+    return { success: false, error: { message: errorMessage } };
   }
 }
