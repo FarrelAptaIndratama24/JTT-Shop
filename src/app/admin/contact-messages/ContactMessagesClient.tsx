@@ -34,7 +34,7 @@ type StatusFilter = ContactMessageStatus | 'all';
 // ─── Status badge config ────────────────────────────────────────────────────
 
 const STATUS_CONFIG: Record<ContactMessageStatus, { label: string; className: string }> = {
-  unread: {
+  new: {
     label: 'New',
     className: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
   },
@@ -129,7 +129,7 @@ export function ContactMessagesClient() {
   const handleViewDetails = (msg: DbContactMessage) => {
     setSelectedMessage(msg);
     // Auto-mark as read when viewing
-    if (msg.status === 'unread') {
+    if (msg.status === 'new') {
       handleMarkAsRead(msg);
     }
   };
@@ -138,12 +138,12 @@ export function ContactMessagesClient() {
 
   const statusFilterOptions: { label: string; value: StatusFilter }[] = [
     { label: 'All', value: 'all' },
-    { label: 'New', value: 'unread' },
+    { label: 'New', value: 'new' },
     { label: 'Read', value: 'read' },
     { label: 'Replied', value: 'replied' },
   ];
 
-  const unreadCount = messages.filter((m) => m.status === 'unread').length;
+  const newCount = messages.filter((m) => m.status === 'new').length;
 
   return (
     <>
@@ -171,9 +171,9 @@ export function ContactMessagesClient() {
                   onClick={() => setStatusFilter(opt.value)}
                 >
                   {opt.label}
-                  {opt.value === 'unread' && unreadCount > 0 && (
+                  {opt.value === 'new' && newCount > 0 && (
                     <span className="ml-1.5 bg-white/20 text-[10px] px-1.5 py-0.5 rounded-full font-bold">
-                      {unreadCount}
+                      {newCount}
                     </span>
                   )}
                 </Button>
@@ -233,7 +233,7 @@ export function ContactMessagesClient() {
                       <tr
                         key={msg.id}
                         className={`hover:bg-white/[0.02] transition-colors ${
-                          msg.status === 'unread' ? 'bg-primary/[0.02]' : ''
+                          msg.status === 'new' ? 'bg-primary/[0.02]' : ''
                         }`}
                       >
                         {/* Sender */}
@@ -241,14 +241,14 @@ export function ContactMessagesClient() {
                           <div className="flex items-center gap-3">
                             <div
                               className={`h-9 w-9 shrink-0 rounded-full flex items-center justify-center text-xs font-bold ${
-                                msg.status === 'unread'
+                                msg.status === 'new'
                                   ? 'bg-primary/10 text-primary'
                                   : 'bg-muted/50 text-muted-foreground'
                               }`}
                             >
                               {msg.first_name[0]}{msg.last_name[0]}
                             </div>
-                            <span className={`text-sm ${msg.status === 'unread' ? 'font-semibold' : 'font-medium'}`}>
+                            <span className={`text-sm ${msg.status === 'new' ? 'font-semibold' : 'font-medium'}`}>
                               {msg.first_name} {msg.last_name}
                             </span>
                           </div>
@@ -261,7 +261,7 @@ export function ContactMessagesClient() {
 
                         {/* Subject */}
                         <td className="px-6 py-4 max-w-[200px]">
-                          <span className={`text-sm truncate block ${msg.status === 'unread' ? 'font-semibold' : ''}`}>
+                          <span className={`text-sm truncate block ${msg.status === 'new' ? 'font-semibold' : ''}`}>
                             {msg.subject}
                           </span>
                         </td>
@@ -298,7 +298,7 @@ export function ContactMessagesClient() {
                               <Eye className="h-4 w-4" />
                             </Button>
 
-                            {msg.status === 'unread' && (
+                            {msg.status === 'new' && (
                               <Button
                                 variant="ghost"
                                 size="sm"
@@ -339,12 +339,12 @@ export function ContactMessagesClient() {
                 return (
                   <div
                     key={msg.id}
-                    className={`p-4 ${msg.status === 'unread' ? 'bg-primary/[0.02]' : ''}`}
+                    className={`p-4 ${msg.status === 'new' ? 'bg-primary/[0.02]' : ''}`}
                   >
                     <div className="flex items-start gap-3 mb-3">
                       <div
                         className={`h-10 w-10 shrink-0 rounded-full flex items-center justify-center text-xs font-bold ${
-                          msg.status === 'unread'
+                          msg.status === 'new'
                             ? 'bg-primary/10 text-primary'
                             : 'bg-muted/50 text-muted-foreground'
                         }`}
@@ -353,7 +353,7 @@ export function ContactMessagesClient() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
-                          <span className={`text-sm ${msg.status === 'unread' ? 'font-semibold' : 'font-medium'}`}>
+                          <span className={`text-sm ${msg.status === 'new' ? 'font-semibold' : 'font-medium'}`}>
                             {msg.first_name} {msg.last_name}
                           </span>
                           <span
@@ -366,7 +366,7 @@ export function ContactMessagesClient() {
                       </div>
                     </div>
 
-                    <p className={`text-sm mb-2 truncate ${msg.status === 'unread' ? 'font-semibold' : ''}`}>
+                    <p className={`text-sm mb-2 truncate ${msg.status === 'new' ? 'font-semibold' : ''}`}>
                       {msg.subject}
                     </p>
 
@@ -385,7 +385,7 @@ export function ContactMessagesClient() {
                         >
                           <Eye className="h-4 w-4" />
                         </Button>
-                        {msg.status === 'unread' && (
+                        {msg.status === 'new' && (
                           <Button
                             variant="ghost"
                             size="sm"
@@ -431,7 +431,7 @@ export function ContactMessagesClient() {
         footer={
           selectedMessage ? (
             <div className="flex flex-wrap gap-2 w-full">
-              {selectedMessage.status === 'unread' && (
+              {selectedMessage.status === 'new' && (
                 <Button
                   variant="outline"
                   size="sm"

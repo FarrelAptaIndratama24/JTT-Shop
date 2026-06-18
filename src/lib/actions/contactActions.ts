@@ -5,7 +5,7 @@ import { contactMessageSchema } from '../validation';
 
 export type ContactActionResponse = {
   success: boolean;
-  error?: any;
+  error?: string;
 };
 
 export async function submitContactMessage(
@@ -27,7 +27,7 @@ export async function submitContactMessage(
   });
 
   if (!validationResult.success) {
-    return { success: false, error: { message: validationResult.error.issues[0].message } };
+    return { success: false, error: validationResult.error.issues[0].message };
   }
 
   const parsedData = validationResult.data;
@@ -41,23 +41,22 @@ export async function submitContactMessage(
       email: parsedData.email,
       subject: parsedData.subject,
       message: parsedData.message,
-      status: 'unread',
+      status: 'new',
     };
-    console.log("Payload:", payload);
+    console.log('[contact.submit] Payload:', JSON.stringify(payload));
 
-    const { data, error } = await supabase.from('contact_messages').insert(payload).select();
-    console.log("Data:", data);
-    console.log("Error:", error);
+    const { error } = await supabase.from('contact_messages').insert(payload);
 
     if (error) {
-      console.error('[contact.submit] insert error:', error.message);
-      return { success: false, error: error };
+      console.error('[contact.submit] Supabase error:', error.code, error.message, error.details);
+      return { success: false, error: error.message };
     }
 
+    console.log('[contact.submit] Insert successful');
     return { success: true };
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred.';
     console.error('[contact.submit] unexpected error:', errorMessage);
-    return { success: false, error: { message: errorMessage } };
+    return { success: false, error: errorMessage };
   }
 }

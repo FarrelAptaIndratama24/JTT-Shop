@@ -55,13 +55,12 @@ export default function ContactPage() {
           message: '',
         });
       } else {
-        const error = result.error;
-        console.log("Error:", error);
-        toast.error(error?.message || JSON.stringify(error));
+        console.error('[contact] Submit error:', result.error);
+        toast.error(result.error || 'Failed to send message. Please try again.');
       }
-    } catch (err: any) {
-      console.log("Error:", err);
-      toast.error(err?.message || JSON.stringify(err));
+    } catch (err) {
+      console.error('[contact] Unexpected error:', err);
+      toast.error('An unexpected error occurred. Please try again.');
     } finally {
       setIsSubmitting(false);
     }

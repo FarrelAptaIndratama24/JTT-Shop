@@ -13,7 +13,7 @@ export type AdminActionResponse = {
 
 export type ContactMessageStats = {
   total: number;
-  unread: number;
+  new_messages: number;
   read: number;
   replied: number;
 };
@@ -37,24 +37,24 @@ export async function getContactMessageStats(): Promise<ContactMessageStats> {
 
     const [
       { count: total },
-      { count: unread },
+      { count: new_messages },
       { count: read },
       { count: replied },
     ] = await Promise.all([
       supabase.from('contact_messages').select('*', { count: 'exact', head: true }),
-      supabase.from('contact_messages').select('*', { count: 'exact', head: true }).eq('status', 'unread'),
+      supabase.from('contact_messages').select('*', { count: 'exact', head: true }).eq('status', 'new'),
       supabase.from('contact_messages').select('*', { count: 'exact', head: true }).eq('status', 'read'),
       supabase.from('contact_messages').select('*', { count: 'exact', head: true }).eq('status', 'replied'),
     ]);
 
     return {
       total: total ?? 0,
-      unread: unread ?? 0,
+      new_messages: new_messages ?? 0,
       read: read ?? 0,
       replied: replied ?? 0,
     };
   } catch {
-    return { total: 0, unread: 0, read: 0, replied: 0 };
+    return { total: 0, new_messages: 0, read: 0, replied: 0 };
   }
 }
 

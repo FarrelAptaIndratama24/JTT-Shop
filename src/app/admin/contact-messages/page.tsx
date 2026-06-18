@@ -33,7 +33,7 @@ export default async function AdminContactMessagesPage() {
 
   const statCards = [
     { name: 'Total Messages', value: stats.total, icon: Inbox, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-    { name: 'New Messages', value: stats.unread, icon: MailWarning, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+    { name: 'New Messages', value: stats.new_messages, icon: MailWarning, color: 'text-amber-500', bg: 'bg-amber-500/10' },
     { name: 'Read Messages', value: stats.read, icon: MailCheck, color: 'text-green-500', bg: 'bg-green-500/10' },
     { name: 'Replied Messages', value: stats.replied, icon: Reply, color: 'text-purple-500', bg: 'bg-purple-500/10' },
   ];

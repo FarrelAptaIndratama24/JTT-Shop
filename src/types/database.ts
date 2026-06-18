@@ -83,7 +83,7 @@ export interface LikedUser {
   avatar: string;
 }
 
-export type ContactMessageStatus = 'unread' | 'read' | 'replied';
+export type ContactMessageStatus = 'new' | 'read' | 'replied';
 
 export interface DbContactMessage {
   id: string;
