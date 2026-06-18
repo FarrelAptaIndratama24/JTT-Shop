@@ -3,9 +3,9 @@ import { ProductCategory } from '../types';
 export const STORE_CONFIG = {
   name: 'JTT Shop',
   description: 'Premium Billiard Cues untuk Pemain Serius',
-  whatsappNumber: '6281234567890', // Format: Country code without '+' + number
-  email: 'hello@jttshop.com',
-  address: 'Jl. Billiard Raya No. 8, Jakarta Selatan, 12345',
+  whatsappNumber: '6281216857823', // Format: Country code without '+' + number
+  email: 'farrelz22014@gmail.com',
+  address: 'Jl. Yusuf Bauty, Makassar, Indonesia',
 };
 
 export const NAV_LINKS = [

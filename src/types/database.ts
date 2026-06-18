@@ -82,3 +82,16 @@ export interface LikedUser {
   username: string | null;
   avatar: string;
 }
+
+export type ContactMessageStatus = 'unread' | 'read' | 'replied';
+
+export interface DbContactMessage {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  subject: string;
+  message: string;
+  status: ContactMessageStatus;
+  created_at: string;
+}

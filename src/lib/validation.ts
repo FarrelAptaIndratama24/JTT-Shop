@@ -117,3 +117,31 @@ export const productSchema = z.object({
   shaft: z.string().optional().default(''),
   features: z.string().optional().default(''),
 });
+
+export const contactMessageSchema = z.object({
+  first_name: z
+    .string()
+    .trim()
+    .min(1, 'First name is required')
+    .max(50, 'First name is too long'),
+  last_name: z
+    .string()
+    .trim()
+    .min(1, 'Last name is required')
+    .max(50, 'Last name is too long'),
+  email: z
+    .string()
+    .trim()
+    .min(1, 'Email is required')
+    .email('Please enter a valid email address'),
+  subject: z
+    .string()
+    .trim()
+    .min(3, 'Subject must be at least 3 characters')
+    .max(150, 'Subject is too long (max 150 characters)'),
+  message: z
+    .string()
+    .trim()
+    .min(10, 'Message must be at least 10 characters')
+    .max(2000, 'Message is too long (max 2000 characters)'),
+});

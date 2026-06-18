@@ -16,7 +16,8 @@ import {
   FileText,
   Plus,
   Store,
-  AlertCircle
+  AlertCircle,
+  Inbox
 } from 'lucide-react';
 import Link from 'next/link';
 import { text } from '@/lib/dictionary';
@@ -165,6 +166,22 @@ export default async function DashboardPage() {
                 <Link href="/community" className="mt-auto">
                   <Button variant="outline" size="sm" className="w-full rounded-full group">
                     {text.dashboard.goToCommunity} <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </Link>
+              </div>
+            )}
+
+            {isAdmin && (
+              <div className="bg-background border border-border p-6 rounded-2xl flex flex-col justify-between">
+                <div>
+                  <h4 className="font-bold text-base mb-2">Contact Messages</h4>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Lihat dan kelola pesan yang masuk dari halaman kontak.
+                  </p>
+                </div>
+                <Link href="/admin/contact-messages" className="mt-auto">
+                  <Button variant="outline" size="sm" className="w-full rounded-full group">
+                    <Inbox className="mr-2 h-4 w-4" /> Kelola Pesan <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
               </div>
