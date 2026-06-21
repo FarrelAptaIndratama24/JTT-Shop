@@ -102,8 +102,6 @@ export const text = {
     userOverview: "Kelola produk dan pesanan Anda.",
     manageProducts: "Kelola Produk",
     viewOrders: "Lihat Pesanan",
-    communityModeration: "Moderasi Komunitas",
-    goToCommunity: "Ke Komunitas",
     platformOverview: "Ringkasan Platform (Admin)",
     totalProducts: "Total Produk",
     totalDiscussions: "Total Diskusi",

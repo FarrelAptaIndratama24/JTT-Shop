@@ -155,21 +155,6 @@ export default async function DashboardPage() {
               </Link>
             </div>
 
-            {isAdmin && (
-              <div className="bg-background border border-border p-6 rounded-2xl flex flex-col justify-between">
-                <div>
-                  <h4 className="font-bold text-base mb-2">{text.dashboard.communityModeration}</h4>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Moderasi diskusi, kelola komentar, dan awasi aktivitas komunitas.
-                  </p>
-                </div>
-                <Link href="/community" className="mt-auto">
-                  <Button variant="outline" size="sm" className="w-full rounded-full group">
-                    {text.dashboard.goToCommunity} <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </Link>
-              </div>
-            )}
 
             {isAdmin && (
               <div className="bg-background border border-border p-6 rounded-2xl flex flex-col justify-between">
