@@ -62,6 +62,7 @@ export function ContactMessagesClient() {
     setIsLoading(true);
     try {
       const result = await getContactMessages(searchTerm || undefined, statusFilter);
+      console.log('[ContactMessages] fetch result:', { success: result.success, count: result.data?.length, error: result.error });
       if (result.success && result.data) {
         setMessages(result.data);
       } else {
@@ -246,10 +247,10 @@ export function ContactMessagesClient() {
                                   : 'bg-muted/50 text-muted-foreground'
                               }`}
                             >
-                              {msg.first_name[0]}{msg.last_name[0]}
+                              {msg.first_name[0]}{msg.last_name?.[0] ?? ''}
                             </div>
                             <span className={`text-sm ${msg.status === 'new' ? 'font-semibold' : 'font-medium'}`}>
-                              {msg.first_name} {msg.last_name}
+                              {msg.first_name} {msg.last_name ?? ''}
                             </span>
                           </div>
                         </td>
@@ -349,12 +350,12 @@ export function ContactMessagesClient() {
                             : 'bg-muted/50 text-muted-foreground'
                         }`}
                       >
-                        {msg.first_name[0]}{msg.last_name[0]}
+                        {msg.first_name[0]}{msg.last_name?.[0] ?? ''}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
                           <span className={`text-sm ${msg.status === 'new' ? 'font-semibold' : 'font-medium'}`}>
-                            {msg.first_name} {msg.last_name}
+                            {msg.first_name} {msg.last_name ?? ''}
                           </span>
                           <span
                             className={`inline-flex items-center px-2 py-0 rounded-full text-[10px] font-semibold border ${statusCfg.className}`}
@@ -472,7 +473,7 @@ export function ContactMessagesClient() {
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm font-medium">
-                    {selectedMessage.first_name} {selectedMessage.last_name}
+                    {selectedMessage.first_name} {selectedMessage.last_name ?? ''}
                   </span>
                 </div>
               </div>

@@ -6,10 +6,10 @@ import { text } from '@/lib/dictionary';
 
 export default function Error({
   error,
-  reset,
+  unstable_retry,
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
+  unstable_retry: () => void;
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
@@ -30,7 +30,7 @@ export default function Error({
       </div>
       
       <button
-        onClick={() => reset()}
+        onClick={() => unstable_retry()}
         className="px-6 py-2.5 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 transition-colors focus:ring-2 focus:ring-primary/50 focus:outline-none"
       >
         {text.errors.tryAgain}
