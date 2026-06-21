@@ -95,3 +95,21 @@ export interface DbContactMessage {
   status: ContactMessageStatus;
   created_at: string;
 }
+
+// ─── Community Moderation ────────────────────────────────────────────────────
+
+export type ModerationStatus = 'pending' | 'approved' | 'rejected' | 'reported';
+export type ModerationContentType = 'post' | 'comment';
+
+export interface DbCommunityModeration {
+  id: string;
+  user_id: string | null;
+  content_type: ModerationContentType;
+  title: string | null;
+  content: string;
+  status: ModerationStatus;
+  report_count: number;
+  created_at: string;
+  updated_at: string;
+  profiles?: DbProfile | null;
+}
